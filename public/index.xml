@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>niciliketo</title>
+    <link>https://niciliketo.github.io/</link>
+    <description>Recent content on niciliketo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-GB</language>
+    <lastBuildDate>Sat, 13 Feb 2021 12:09:55 +0000</lastBuildDate><atom:link href="https://niciliketo.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2021 02 13 My Blog</title>
+      <link>https://niciliketo.github.io/posts/2021-02-13-my-blog/</link>
+      <pubDate>Sat, 13 Feb 2021 12:09:55 +0000</pubDate>
+      
+      <guid>https://niciliketo.github.io/posts/2021-02-13-my-blog/</guid>
+      <description>Making a blog with Hugo on github on Docker I wanted to try using a static site generator. Github has native support for Jekyll so to make it more interesting I decided to use Hugo.
+I am trying to use docker at the moment to avoid installing heaps of things on my computer.
+Git I created a github repo here, according to GitHub&amp;rsquo;s Instructions
+I then cloned it locally using the Code link in the repo&amp;hellip;</description>
+    </item>
+    
+  </channel>
+</rss>
