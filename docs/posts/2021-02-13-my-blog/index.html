@@ -49,7 +49,7 @@ Git I created a github repo here, according to GitHub&rsquo;s Instructions
 I then cloned it locally using the Code link in the repo&hellip;">
 <meta itemprop="datePublished" content="2021-02-13T12:09:55+00:00" />
 <meta itemprop="dateModified" content="2021-02-13T12:09:55+00:00" />
-<meta itemprop="wordCount" content="289">
+<meta itemprop="wordCount" content="316">
 
 
 
@@ -186,8 +186,13 @@ With the exception of the hugo ones, e.g.</p>
 </code></pre></div><p>I then edited the generated file and added this :-)</p>
 <h1 id="config">Config</h1>
 <p>Not sure about the theme, but can change that later.
-I did edit the config.toml file and change the site url and title.</p>
-<h1 id="publishing">Publishing</h1>
+I did edit the config.toml file and change the site url and title.
+I also found that github pages doesnt let you set public as the source directory.</p>
+<pre><code>baseURL = &quot;https://niciliketo.github.io/&quot;
+languageCode = &quot;en-GB&quot;
+title = &quot;niciliketo&quot;
+theme = &quot;ananke&quot;
+</code></pre><h1 id="publishing">Publishing</h1>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker-compose run server <span style="color:#e6db74">&#34;build&#34;</span>
 git add .
 git commit -m<span style="color:#e6db74">&#34;First post&#34;</span>
