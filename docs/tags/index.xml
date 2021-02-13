@@ -1,10 +1,29 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on niciliketo</title>
+    <title>Tags on Things I have seen</title>
     <link>https://niciliketo.github.io/tags/</link>
-    <description>Recent content in Tags on niciliketo</description>
+    <description>Recent content in Tags on Things I have seen</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-GB</language><atom:link href="https://niciliketo.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-GB</language>
+    <lastBuildDate>Sat, 13 Feb 2021 12:09:55 +0000</lastBuildDate><atom:link href="https://niciliketo.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>diary</title>
+      <link>https://niciliketo.github.io/tags/diary/</link>
+      <pubDate>Sat, 13 Feb 2021 12:09:55 +0000</pubDate>
+      
+      <guid>https://niciliketo.github.io/tags/diary/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hugo</title>
+      <link>https://niciliketo.github.io/tags/hugo/</link>
+      <pubDate>Sat, 13 Feb 2021 12:09:55 +0000</pubDate>
+      
+      <guid>https://niciliketo.github.io/tags/hugo/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>

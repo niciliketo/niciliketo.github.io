@@ -1,5 +1,15 @@
 baseURL = "https://niciliketo.github.io/"
 languageCode = "en-GB"
-title = "niciliketo"
+title = "Things I have seen"
 theme = "ananke"
 publishDir = "docs"
+
+[params]
+  AuthorName = "Nic Martin"
+  GitHubUser = "niciliketo"
+  Subtitle = "Notes on things I have seen"
+  background_color_class = "bg-near-black"
+  featured_image = "/images/lillia_the_cat.jpg"
+  recent_posts_number = 2
+[permalinks]
+  posts = "/:year/:month/:title/"

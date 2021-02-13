@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Things I have seen</title>
-    <link>https://niciliketo.github.io/</link>
-    <description>Recent content on Things I have seen</description>
+    <title>diary on Things I have seen</title>
+    <link>https://niciliketo.github.io/tags/diary/</link>
+    <description>Recent content in diary on Things I have seen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-GB</language>
-    <lastBuildDate>Sat, 13 Feb 2021 12:09:55 +0000</lastBuildDate><atom:link href="https://niciliketo.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 13 Feb 2021 12:09:55 +0000</lastBuildDate><atom:link href="https://niciliketo.github.io/tags/diary/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>My new blog</title>
       <link>https://niciliketo.github.io/2021/02/my-new-blog/</link>

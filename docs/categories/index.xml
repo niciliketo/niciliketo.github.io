@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on niciliketo</title>
+    <title>Categories on Things I have seen</title>
     <link>https://niciliketo.github.io/categories/</link>
-    <description>Recent content in Categories on niciliketo</description>
+    <description>Recent content in Categories on Things I have seen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-GB</language><atom:link href="https://niciliketo.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
   </channel>
