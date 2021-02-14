@@ -2,6 +2,7 @@
 title: "Networking Head to Head"
 date: 2021-02-14T11:41:47Z
 draft: false
+featured_image: 'images/2021/cable.jpg'
 tags: ["gadget", "review"]
 ---
 
