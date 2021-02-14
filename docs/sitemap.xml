@@ -3,6 +3,48 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://niciliketo.github.io/tags/gadget/</loc>
+    <lastmod>2021-02-14T11:41:47+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://niciliketo.github.io/2021/02/networking-head-to-head/</loc>
+    <lastmod>2021-02-14T11:41:47+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://niciliketo.github.io/posts/</loc>
+    <lastmod>2021-02-14T11:41:47+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://niciliketo.github.io/tags/review/</loc>
+    <lastmod>2021-02-14T11:41:47+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://niciliketo.github.io/tags/</loc>
+    <lastmod>2021-02-14T11:41:47+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://niciliketo.github.io/</loc>
+    <lastmod>2021-02-14T11:41:47+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://niciliketo.github.io/tags/diary/</loc>
     <lastmod>2021-02-14T08:03:41+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -18,27 +60,6 @@
   
   <url>
     <loc>https://niciliketo.github.io/tags/lpt/</loc>
-    <lastmod>2021-02-14T08:03:41+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://niciliketo.github.io/posts/</loc>
-    <lastmod>2021-02-14T08:03:41+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://niciliketo.github.io/tags/</loc>
-    <lastmod>2021-02-14T08:03:41+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://niciliketo.github.io/</loc>
     <lastmod>2021-02-14T08:03:41+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
