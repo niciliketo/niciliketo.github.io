@@ -4,36 +4,70 @@
   
   <url>
     <loc>https://niciliketo.github.io/tags/diary/</loc>
-    <lastmod>2021-02-13T12:09:55+00:00</lastmod>
+    <lastmod>2021-02-14T08:03:41+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://niciliketo.github.io/tags/hugo/</loc>
-    <lastmod>2021-02-13T12:09:55+00:00</lastmod>
+    <lastmod>2021-02-14T08:03:41+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://niciliketo.github.io/tags/lpt/</loc>
+    <lastmod>2021-02-14T08:03:41+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://niciliketo.github.io/posts/</loc>
+    <lastmod>2021-02-14T08:03:41+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://niciliketo.github.io/tags/</loc>
+    <lastmod>2021-02-14T08:03:41+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://niciliketo.github.io/</loc>
+    <lastmod>2021-02-14T08:03:41+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://niciliketo.github.io/2021/02/valentines-day/</loc>
+    <lastmod>2021-02-14T08:03:41+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://niciliketo.github.io/2021/02/my-new-blog/</loc>
     <lastmod>2021-02-13T12:09:55+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://niciliketo.github.io/posts/</loc>
-    <lastmod>2021-02-13T12:09:55+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://niciliketo.github.io/tags/</loc>
-    <lastmod>2021-02-13T12:09:55+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://niciliketo.github.io/</loc>
-    <lastmod>2021-02-13T12:09:55+00:00</lastmod>
+    <loc>https://niciliketo.github.io/about/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://niciliketo.github.io/categories/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
 </urlset>

@@ -1,15 +1,43 @@
 baseURL = "https://niciliketo.github.io/"
 languageCode = "en-GB"
 title = "Things I have seen"
+subTitle = "Random"
 theme = "ananke"
 publishDir = "docs"
+resourceDir = "../resources"
+
+DefaultContentLanguage = "en"
+SectionPagesMenu = "main"
+Paginate = 3 # this is set low for demonstrating with dummy content. Set to a higher number
+googleAnalytics = ""
+enableRobotsTXT = true
 
 [params]
   AuthorName = "Nic Martin"
   GitHubUser = "niciliketo"
-  Subtitle = "Notes on things I have seen"
+  description = "My notes on the things I have seen"
+  # choose a background color from any on this page: http://tachyons.io/docs/themes/skins/ and preface it with "bg-"
   background_color_class = "bg-near-black"
   featured_image = "/images/2021/lillia_the_cat.jpg"
   recent_posts_number = 2
+  favicon = ""
+  site_logo = ""
+  facebook = ""
+  twitter = "https://twitter.com/niciliketo"
+  instagram = ""
+  youtube = ""
+  github = "https://github.com/niciliketo"
+  gitlab = ""
+  linkedin = "https://www.linkedin.com/in/nicmartin/"
+  mastodon = ""
+  slack = ""
+  stackoverflow = ""
+  rss = ""
+  # toc = true
 [permalinks]
   posts = "/:year/:month/:title/"
+
+[sitemap]
+  changefreq = "monthly"
+  priority = 0.5
+  filename = "sitemap.xml"

@@ -6,7 +6,17 @@
     <description>Recent content in diary on Things I have seen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-GB</language>
-    <lastBuildDate>Sat, 13 Feb 2021 12:09:55 +0000</lastBuildDate><atom:link href="https://niciliketo.github.io/tags/diary/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 14 Feb 2021 08:03:41 +0000</lastBuildDate><atom:link href="https://niciliketo.github.io/tags/diary/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Valentines Day</title>
+      <link>https://niciliketo.github.io/2021/02/valentines-day/</link>
+      <pubDate>Sun, 14 Feb 2021 08:03:41 +0000</pubDate>
+      
+      <guid>https://niciliketo.github.io/2021/02/valentines-day/</guid>
+      <description>Tip of the day If you are writing two valentines cards, to two different people and they are different sizes. Make sure you don&amp;rsquo;t write the wrong name on the envelope!
+Trick of the day (Hugo) I found that following the README for the Ananke theme was quite helpful. Especially copying the config.toml from the example site, which magically made the About and Posts menu items appear. It also allowed me to add links to some social sites and customise the home and about pages.</description>
+    </item>
+    
     <item>
       <title>My new blog</title>
       <link>https://niciliketo.github.io/2021/02/my-new-blog/</link>
@@ -15,7 +25,7 @@
       <guid>https://niciliketo.github.io/2021/02/my-new-blog/</guid>
       <description>I wanted to try using a static site generator. Github has native support for Jekyll so to make it more interesting I decided to use Hugo.
 I am experimenting with Docker at the moment to avoid installing heaps of things on my computer.
-Git I created a github repo here, according to GitHub&amp;rsquo;s Instructions
+GitHub I created a github repo here, according to GitHub&amp;rsquo;s Instructions
 I then cloned it locally using the Code link in the repo&amp;hellip;
 Installation There is a docker image for hugo listed in the installation instructions.</description>
     </item>
