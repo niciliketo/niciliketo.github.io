@@ -33,7 +33,8 @@ enableRobotsTXT = true
   slack = ""
   stackoverflow = ""
   rss = ""
-  # toc = true
+  toc = true
+  show_reading_time = true
 [permalinks]
   posts = "/:year/:month/:title/"
 

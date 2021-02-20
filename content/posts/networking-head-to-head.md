@@ -26,7 +26,7 @@ In the past I have tried a few different solutions -
 # Incumbent champion
 A couple of months ago, I decided to try something new. This is the current incumbent champion and what I use on a day-to-day basis.
 
-It works pretty well, although its only a metter of time until someone trips over it. It also helps me switch off at the end of the day as it was only supposed to be for use in emergencies and I have committed to winding it in each evening.
+It works pretty well, although its only a matter of time until someone trips over it. It also helps me switch off at the end of the day as it was only supposed to be for use in emergencies and I have committed to winding it in each evening.
 
 | Name: | Router Cable |
 ---|---|
