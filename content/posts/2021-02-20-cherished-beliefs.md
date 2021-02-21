@@ -29,6 +29,6 @@ They need to do more research to reach a conclusion on this, but one theory put 
 
 They also suggested that we could combat the reaction by trying to build a sense of self around what you do rather than what you believe and also to try and be more logical and less emotional when discussing these types of subject.
 
-The podcast was really though provoking, and although I don’t think the advice is easy to implement, it is something to think about in the future.
+The podcast was thought provoking, and although I don’t think the advice is easy to implement, it is something to think about in the future.
 
 There was also a bonus link to the [Wikipedia page on common misconcptions](https://en.wikipedia.org/wiki/List_of_common_misconceptions)
