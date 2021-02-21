@@ -31,4 +31,4 @@ They also suggested that we could combat the reaction by trying to build a sense
 
 The podcast was thought provoking, and although I don’t think the advice is easy to implement, it is something to think about in the future.
 
-There was also a bonus link to the [Wikipedia page on common misconcptions](https://en.wikipedia.org/wiki/List_of_common_misconceptions)
+There was also a bonus link to the [Wikipedia page on common misconceptions](https://en.wikipedia.org/wiki/List_of_common_misconceptions)
