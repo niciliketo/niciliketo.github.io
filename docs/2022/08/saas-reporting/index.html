@@ -46,7 +46,7 @@ Below I have attempted to summarise my experience building a single instance, mu
 Below I have attempted to summarise my experience building a single instance, multi-tenant SaaS solution.
  challenges we see things we have done so far approaches we may consider in future  Challenges User experience Users are familiar with creating reports with tools such as Excel and Tableau. They expect a similar quality of experience from a SaaS reporting tool."><meta itemprop="datePublished" content="2022-08-28T09:30:30+00:00" />
 <meta itemprop="dateModified" content="2022-08-28T09:30:30+00:00" />
-<meta itemprop="wordCount" content="834">
+<meta itemprop="wordCount" content="826">
 <meta itemprop="keywords" content="reporting,rails," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="SaaS Reporting"/>
 <meta name="twitter:description" content="Reporting requirements for a SaaS product often become more important as customer size increases. Enterprise Ready have a great article explaining this.
@@ -199,7 +199,7 @@ Below I have attempted to summarise my experience building a single instance, mu
       
       
         <span class="f6 mv4 dib tracked"> - 4 minutes read</span>
-        <span class="f6 mv4 dib tracked"> - 834 words</span>
+        <span class="f6 mv4 dib tracked"> - 826 words</span>
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Reporting requirements for a SaaS product often become more important as customer size increases. Enterprise Ready have a <a href="https://www.enterpriseready.io/features/advanced-reporting/">great article</a> explaining this.</p>
@@ -213,7 +213,7 @@ Below I have attempted to summarise my experience building a single instance, mu
 <h2 id="user-experience">User experience</h2>
 <p>Users are familiar with creating reports with tools such as Excel and Tableau. They expect a similar quality of experience from a SaaS reporting tool. Reporting is not our core competence and we will not be able to invest as much into a reporting tool as companies such as Microsoft or Salesforce.</p>
 <h2 id="logically-separated-data">Logically separated data</h2>
-<p>One of the key challenges with using existing reporting tools is that we are a single instance multi tenant SaaS solution. This means that customers data is logically separated by security rules we define in the application.  Any reporting solution must adhere to the rules to prevent one customer accessing another customers data.</p>
+<p>We are a single instance multi tenant SaaS solution. This means that customers data is stored in one database, logically separated by security rules we define in the application.  Any reporting solution must adhere to the rules to prevent one customer accessing another customers data.</p>
 <h1 id="things-we-have-done-so-far">Things we have done so far</h1>
 <h2 id="basic-charts">Basic charts</h2>
 <p>We have provided these types of reports since the beginning. They allow a user to visualise details of a single event.</p>

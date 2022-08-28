@@ -17,7 +17,7 @@ Below I have attempted to summarise my experience building a single instance, mu
 Users are familiar with creating reports with tools such as Excel and Tableau. They expect a similar quality of experience from a SaaS reporting tool. Reporting is not our core competence and we will not be able to invest as much into a reporting tool as companies such as Microsoft or Salesforce.
 
 ## Logically separated data
-One of the key challenges with using existing reporting tools is that we are a single instance multi tenant SaaS solution. This means that customers data is logically separated by security rules we define in the application.  Any reporting solution must adhere to the rules to prevent one customer accessing another customers data.
+We are a single instance multi tenant SaaS solution. This means that customers data is stored in one database, logically separated by security rules we define in the application.  Any reporting solution must adhere to the rules to prevent one customer accessing another customers data.
 
 
 # Things we have done so far
