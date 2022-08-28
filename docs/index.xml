@@ -6,7 +6,18 @@
     <description>Recent content in The things I have seen on Things I have seen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-GB</language>
-    <lastBuildDate>Sat, 20 Feb 2021 18:23:38 +0000</lastBuildDate><atom:link href="https://niciliketo.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 28 Aug 2022 09:30:30 +0000</lastBuildDate><atom:link href="https://niciliketo.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SaaS Reporting</title>
+      <link>https://niciliketo.github.io/2022/08/saas-reporting/</link>
+      <pubDate>Sun, 28 Aug 2022 09:30:30 +0000</pubDate>
+      
+      <guid>https://niciliketo.github.io/2022/08/saas-reporting/</guid>
+      <description>Reporting requirements for a SaaS product often become more important as customer size increases. Enterprise Ready have a great article explaining this.
+Below I have attempted to summarise my experience building a single instance, multi-tenant SaaS solution.
+ challenges we see things we have done so far approaches we may consider in future  Challenges User experience Users are familiar with creating reports with tools such as Excel and Tableau. They expect a similar quality of experience from a SaaS reporting tool.</description>
+    </item>
+    
     <item>
       <title>Cherished Beliefs</title>
       <link>https://niciliketo.github.io/2021/02/cherished-beliefs/</link>

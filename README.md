@@ -5,7 +5,12 @@ To run in dev mode
 docker-compose up
 ```
 
+To create post
+```bash
+./hugo.sh  new posts/<yyyy-mm-dd>-xyz.md
+```
+
 To publish
 ```
-./publish.sg
+./publish.sh
 ```

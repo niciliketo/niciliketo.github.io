@@ -7,7 +7,7 @@
     <title>My new blog | Things I have seen</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
     <meta name="description" content="Making a blog with Hugo on GitHub on Docker">
-    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="generator" content="Hugo 0.92.1" />
     
     
       <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -33,19 +33,15 @@
     <meta property="og:title" content="My new blog" />
 <meta property="og:description" content="Making a blog with Hugo on GitHub on Docker" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://niciliketo.github.io/2021/02/my-new-blog/" />
+<meta property="og:url" content="https://niciliketo.github.io/2021/02/my-new-blog/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-02-13T12:09:55+00:00" />
 <meta property="article:modified_time" content="2021-02-13T12:09:55+00:00" />
+
 <meta itemprop="name" content="My new blog">
-<meta itemprop="description" content="Making a blog with Hugo on GitHub on Docker">
-<meta itemprop="datePublished" content="2021-02-13T12:09:55+00:00" />
+<meta itemprop="description" content="Making a blog with Hugo on GitHub on Docker"><meta itemprop="datePublished" content="2021-02-13T12:09:55+00:00" />
 <meta itemprop="dateModified" content="2021-02-13T12:09:55+00:00" />
 <meta itemprop="wordCount" content="365">
-
-
-
-<meta itemprop="keywords" content="diary,hugo," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="diary,hugo," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="My new blog"/>
 <meta name="twitter:description" content="Making a blog with Hugo on GitHub on Docker"/>
 
@@ -211,7 +207,7 @@
 <p>There is a <a href="https://hub.docker.com/r/klakegg/hugo/">docker image</a> for hugo listed in the <a href="https://gohugo.io/getting-started/installing">installation instructions</a>.</p>
 <p>I am not a Docker expert, so it took me a while to find the right commands.</p>
 <p>My docker-compose.yml looks like this :-</p>
-<pre><code>  server:
+<pre tabindex="0"><code>  server:
     image: klakegg/hugo:0.80.0
     command: server
     volumes:
@@ -220,23 +216,23 @@
       - &quot;1313:1313&quot;
 </code></pre><p>First off I used the &lsquo;build&rsquo; example from the docker documentation, but this made it difficult to test changes locally, so I changed to the &lsquo;server&rsquo; example</p>
 <p>I then had to run this command to get a new site generated</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker-compose run server <span style="color:#e6db74">&#34;new site . --force&#34;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker-compose run server <span style="color:#e6db74">&#34;new site . --force&#34;</span>
 </code></pre></div><p>It wasnt immediately obvious that the <code>hugo</code> command would be automatically run and I just needed to pass parameters to it.</p>
 <h1 id="first-post">First post</h1>
 <p>I then followed instructions to <a href="https://gohugo.io/getting-started/quick-start/">Get Started</a></p>
 <p>I ran the commands locally rather than in docker.
 With the exception of the hugo ones, e.g.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker-compose run server <span style="color:#e6db74">&#34;new posts/2021-02-13-my-blog.md&#34;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker-compose run server <span style="color:#e6db74">&#34;new posts/2021-02-13-my-blog.md&#34;</span>
 </code></pre></div><p>I also found I had to fix permissions after running hugo commands</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo chown -R <span style="color:#66d9ef">$(</span>whoami<span style="color:#66d9ef">)</span> .
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo chown -R <span style="color:#66d9ef">$(</span>whoami<span style="color:#66d9ef">)</span> .
 </code></pre></div><p>Running the server then allowed me to see the page and do some live editing while watching the site at <code>http://localhost:1313/</code></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker-compose up
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker-compose up
 </code></pre></div><p>I then edited the generated file and added this post :-)</p>
 <h1 id="config">Config</h1>
 <p>Not sure about the theme, but can change that later.
 I did edit the config.toml file and change the site url and title.
 I also found that github pages doesnt let you set public as the source directory.</p>
-<pre><code>baseURL = &quot;https://niciliketo.github.io/&quot;
+<pre tabindex="0"><code>baseURL = &quot;https://niciliketo.github.io/&quot;
 languageCode = &quot;en-GB&quot;
 title = &quot;Things I have seen&quot;
 theme = &quot;ananke&quot;
@@ -252,7 +248,7 @@ publishDir = &quot;docs&quot;
 [permalinks]
   posts = &quot;/:year/:month/:title/&quot;
 </code></pre><h1 id="publishing">Publishing</h1>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker-compose run server <span style="color:#e6db74">&#34;build&#34;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker-compose run server <span style="color:#e6db74">&#34;build&#34;</span>
 git add .
 git commit -m<span style="color:#e6db74">&#34;First post&#34;</span>
 git push origin main
@@ -286,7 +282,7 @@ git push origin main
     <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://niciliketo.github.io/" >
-    &copy;  Things I have seen 2021 
+    &copy;  Things I have seen 2022 
   </a>
     <div>
 
