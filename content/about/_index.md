@@ -13,4 +13,6 @@ I decided to start a personal blog because...
 - In my spare time I like trying new technologies.
 - I would like to improve my writing and communication skills.
 
+Views expressed here are my own.
+
 
