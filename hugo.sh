@@ -1,2 +1,2 @@
 #! /bin/bash
-docker-compose run server "build" $@
+docker compose run server "build" $@
