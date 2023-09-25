@@ -6,7 +6,18 @@
     <description>Recent content in The things I have seen on Things I have seen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-GB</language>
-    <lastBuildDate>Sun, 28 Aug 2022 09:30:30 +0000</lastBuildDate><atom:link href="https://niciliketo.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 09 Sep 2023 07:46:19 +0000</lastBuildDate><atom:link href="https://niciliketo.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Retrieval Augmented Generation</title>
+      <link>https://niciliketo.github.io/2023/09/retrieval-augmented-generation/</link>
+      <pubDate>Sat, 09 Sep 2023 07:46:19 +0000</pubDate>
+      
+      <guid>https://niciliketo.github.io/2023/09/retrieval-augmented-generation/</guid>
+      <description>I want to implement a RAG system that will index a set of documents and then answer questions based on them. My plan is to use our ISO27001 ISMS documents to answer security questions from suppliers.
+The basic plan was
+ Build it inside docker Use Langchain to make it all work Use ElasticSearch for the retrieval part Use Open AI API initially, but hopefully a local LLM in the future  Here is the GitHub repo</description>
+    </item>
+    
     <item>
       <title>SaaS Reporting</title>
       <link>https://niciliketo.github.io/2022/08/saas-reporting/</link>
