@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>How to Deploy n8n to Hetzner with Kamal | Things I have seen</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="How to Deploy n8n to Hetzner with Kamal CAVEAT: got the AI to help write this.
+Here is how I deployed n8n to a Hetzner server using Kamal .
+Table of Contents  Introduction Why This Stack? Prerequisites Step 1: Set Up Your Hetzner Server Step 2: Configure Your Local Environment Step 3: Create the n8n Dockerfile Step 4: Configure Kamal Step 5: Set Up Environment Variables Step 6: Deploy to Hetzner Step 7: Configure DNS Conclusion  Introduction n8n is an open-source workflow automation tool that allows you to connect various applications and services together.">
+    <meta name="generator" content="Hugo 0.92.1" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+
+  
+  
+    <link rel="stylesheet" href="/ananke/dist/main.css_5c99d70a7725bacd4c701e995b969fea.css" >
+  
+
+
+
+
+    
+      
+
+    
+
+    
+    
+    <meta property="og:title" content="How to Deploy n8n to Hetzner with Kamal" />
+<meta property="og:description" content="How to Deploy n8n to Hetzner with Kamal CAVEAT: got the AI to help write this.
+Here is how I deployed n8n to a Hetzner server using Kamal .
+Table of Contents  Introduction Why This Stack? Prerequisites Step 1: Set Up Your Hetzner Server Step 2: Configure Your Local Environment Step 3: Create the n8n Dockerfile Step 4: Configure Kamal Step 5: Set Up Environment Variables Step 6: Deploy to Hetzner Step 7: Configure DNS Conclusion  Introduction n8n is an open-source workflow automation tool that allows you to connect various applications and services together." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://niciliketo.github.io/2025/10/how-to-deploy-n8n-to-hetzner-with-kamal/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-10-19T13:05:50+00:00" />
+<meta property="article:modified_time" content="2025-10-19T13:05:50+00:00" />
+
+<meta itemprop="name" content="How to Deploy n8n to Hetzner with Kamal">
+<meta itemprop="description" content="How to Deploy n8n to Hetzner with Kamal CAVEAT: got the AI to help write this.
+Here is how I deployed n8n to a Hetzner server using Kamal .
+Table of Contents  Introduction Why This Stack? Prerequisites Step 1: Set Up Your Hetzner Server Step 2: Configure Your Local Environment Step 3: Create the n8n Dockerfile Step 4: Configure Kamal Step 5: Set Up Environment Variables Step 6: Deploy to Hetzner Step 7: Configure DNS Conclusion  Introduction n8n is an open-source workflow automation tool that allows you to connect various applications and services together."><meta itemprop="datePublished" content="2025-10-19T13:05:50+00:00" />
+<meta itemprop="dateModified" content="2025-10-19T13:05:50+00:00" />
+<meta itemprop="wordCount" content="972">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="How to Deploy n8n to Hetzner with Kamal"/>
+<meta name="twitter:description" content="How to Deploy n8n to Hetzner with Kamal CAVEAT: got the AI to help write this.
+Here is how I deployed n8n to a Hetzner server using Kamal .
+Table of Contents  Introduction Why This Stack? Prerequisites Step 1: Set Up Your Hetzner Server Step 2: Configure Your Local Environment Step 3: Create the n8n Dockerfile Step 4: Configure Kamal Step 5: Set Up Environment Variables Step 6: Deploy to Hetzner Step 7: Configure DNS Conclusion  Introduction n8n is an open-source workflow automation tool that allows you to connect various applications and services together."/>
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white DEV">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-near-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        Things I have seen
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="About page">
+              About
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Posts page">
+              Posts
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+
+<a href="https://twitter.com/niciliketo" target="_blank" class="link-transition twitter link dib z-999 pt3 pt0-l mr1" title="Twitter link" rel="noopener" aria-label="follow on Twitter——Opens in a new window">
+  <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+<a href="https://www.linkedin.com/in/nicmartin/" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/niciliketo" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=https://niciliketo.github.io/2025/10/how-to-deploy-n8n-to-hetzner-with-kamal/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=https://niciliketo.github.io/2025/10/how-to-deploy-n8n-to-hetzner-with-kamal/&amp;text=How%20to%20Deploy%20n8n%20to%20Hetzner%20with%20Kamal" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://niciliketo.github.io/2025/10/how-to-deploy-n8n-to-hetzner-with-kamal/&amp;title=How%20to%20Deploy%20n8n%20to%20Hetzner%20with%20Kamal" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+
+      <h1 class="f1 athelas mt3 mb1">How to Deploy n8n to Hetzner with Kamal</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2025-10-19T13:05:50Z">October 19, 2025</time>
+
+      
+      
+        <span class="f6 mv4 dib tracked"> - 5 minutes read</span>
+        <span class="f6 mv4 dib tracked"> - 972 words</span>
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h1 id="how-to-deploy-n8n-to-hetzner-with-kamal">How to Deploy n8n to Hetzner with Kamal</h1>
+<p>CAVEAT: got the AI to help write this.</p>
+<p>Here is how I deployed n8n to a Hetzner server using Kamal .</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#why-this-stack">Why This Stack?</a></li>
+<li><a href="#prerequisites">Prerequisites</a></li>
+<li><a href="#step-1-set-up-your-hetzner-server">Step 1: Set Up Your Hetzner Server</a></li>
+<li><a href="#step-2-configure-your-local-environment">Step 2: Configure Your Local Environment</a></li>
+<li><a href="#step-3-create-the-n8n-dockerfile">Step 3: Create the n8n Dockerfile</a></li>
+<li><a href="#step-4-configure-kamal">Step 4: Configure Kamal</a></li>
+<li><a href="#step-5-set-up-environment-variables">Step 5: Set Up Environment Variables</a></li>
+<li><a href="#step-6-deploy-to-hetzner">Step 6: Deploy to Hetzner</a></li>
+<li><a href="#step-7-configure-dns">Step 7: Configure DNS</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<p><a href="https://n8n.io">n8n</a> is an open-source workflow automation tool that allows you to connect various applications and services together. Unlike cloud-hosted solutions, self-hosting n8n gives you complete control over your data and workflows.</p>
+<p>In this guide, we&rsquo;ll deploy n8n to a Hetzner Cloud server using Kamal, a modern deployment tool that makes it easy to deploy web applications with zero-downtime deployments and automatic SSL certificate management.</p>
+<h2 id="why-this-stack">Why This Stack?</h2>
+<h3 id="hetzner-cloud">Hetzner Cloud</h3>
+<ul>
+<li><strong>Cost-effective</strong>: More affordable than AWS, DigitalOcean, or other cloud providers</li>
+<li><strong>High performance</strong>: Excellent server specifications for the price</li>
+<li><strong>European data centers</strong>: Great for GDPR compliance</li>
+</ul>
+<h3 id="kamal">Kamal</h3>
+<ul>
+<li><strong>Simple deployment</strong>: Deploy with a single command</li>
+<li><strong>Zero-downtime</strong>: Update your app without interrupting service</li>
+<li><strong>Automatic SSL</strong>: Let&rsquo;s Encrypt certificates configured automatically</li>
+<li><strong>No complex infrastructure</strong>: No need to learn Kubernetes or complex orchestration</li>
+</ul>
+<h3 id="n8n">n8n</h3>
+<ul>
+<li><strong>Open source</strong>: Full control over your automation workflows</li>
+<li><strong>Self-hosted</strong>: Your data stays on your server</li>
+<li><strong>Powerful</strong>: Connect 200+ apps and services</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Before you begin, you&rsquo;ll need:</p>
+<ol>
+<li><strong>A Hetzner Cloud account</strong> - Sign up at <a href="https://www.hetzner.com/cloud">hetzner.com</a></li>
+<li><strong>A domain name</strong> - You&rsquo;ll need a domain pointing to your server</li>
+<li><strong>Docker Hub account</strong> - For storing your Docker images (free account works)</li>
+<li><strong>SSH key</strong> - For secure server access</li>
+<li><strong>Basic command-line knowledge</strong> - Comfortable using the terminal</li>
+</ol>
+<h3 id="system-requirements">System Requirements</h3>
+<ul>
+<li><strong>Local machine</strong>: macOS, Linux, or Windows with WSL2</li>
+<li><strong>Server</strong>: Minimum 2GB RAM (4GB recommended for production)</li>
+<li><strong>Ruby 3.0+</strong>: For running Kamal</li>
+<li><strong>Docker</strong>: For building images locally</li>
+</ul>
+<h2 id="step-1-set-up-your-hetzner-server">Step 1: Set Up Your Hetzner Server</h2>
+<h3 id="create-a-server">Create a Server</h3>
+<ol>
+<li>Log in to <a href="https://console.hetzner.cloud/">Hetzner Cloud Console</a></li>
+<li>Create a new project (e.g., &ldquo;n8n-production&rdquo;)</li>
+<li>Click &ldquo;Add Server&rdquo; and configure:
+<ul>
+<li><strong>Location</strong>: Choose closest to your users</li>
+<li><strong>Image</strong>: Ubuntu 22.04 or 24.04</li>
+<li><strong>Type</strong>: CPX11 (2 vCPU, 2GB RAM) minimum</li>
+<li><strong>SSH Key</strong>: Add your public SSH key</li>
+</ul>
+</li>
+<li>Click &ldquo;Create &amp; Buy Now&rdquo;</li>
+</ol>
+<h3 id="note-your-server-details">Note Your Server Details</h3>
+<p>Once created, note:</p>
+<ul>
+<li><strong>Server IP address</strong></li>
+<li><strong>SSH access</strong>: <code>root@your-server-ip</code></li>
+</ul>
+<h3 id="test-ssh-connection">Test SSH Connection</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh root@your-server-ip
+</code></pre></div><p>If successful, you should get access to the server.</p>
+<h2 id="step-2-configure-your-local-environment">Step 2: Configure Your Local Environment</h2>
+<h3 id="install-ruby-with-mise-recommended">Install Ruby with mise (Recommended)</h3>
+<p><a href="https://mise.jdx.dev/">mise</a> is a modern tool version manager:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Install mise (if not already installed)</span>
+curl https://mise.run | sh
+
+<span style="color:#75715e"># Install Ruby</span>
+mise install ruby@latest
+mise use ruby@3.4.7
+
+<span style="color:#75715e"># Verify installation</span>
+ruby --version
+</code></pre></div><h3 id="install-kamal">Install Kamal</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gem install kamal
+kamal version
+</code></pre></div><h3 id="create-your-project">Create Your Project</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir n8n-deployment
+cd n8n-deployment
+git init
+</code></pre></div><h3 id="set-up-ssh-agent">Set Up SSH Agent</h3>
+<p>Configure SSH to use your Hetzner key:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">eval <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>ssh-agent -s<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+ssh-add ~/.ssh/your-hetzner-key
+</code></pre></div><p>Test the connection:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh root@your-server-ip <span style="color:#e6db74">&#34;echo &#39;Connection successful!&#39;&#34;</span>
+</code></pre></div><h2 id="step-3-create-the-n8n-dockerfile">Step 3: Create the n8n Dockerfile</h2>
+<p>Create a <code>Dockerfile</code> in your project root:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dockerfile" data-lang="dockerfile"><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> n8nio/n8n:latest</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENV</span> NODE_ENV<span style="color:#f92672">=</span>production
+<span style="color:#66d9ef">ENV</span> N8N_PORT<span style="color:#f92672">=</span><span style="color:#ae81ff">5678</span>
+<span style="color:#66d9ef">ENV</span> N8N_PROTOCOL<span style="color:#f92672">=</span>https
+<span style="color:#66d9ef">ENV</span> N8N_HOST<span style="color:#f92672">=</span>your-domain.com<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">EXPOSE</span><span style="color:#e6db74"> 5678</span><span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>Replace <code>your-domain.com</code> with your actual domain.</p>
+<h2 id="step-4-configure-kamal">Step 4: Configure Kamal</h2>
+<p>Create <code>config/deploy.yml</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">service</span>: <span style="color:#ae81ff">n8n</span>
+<span style="color:#f92672">image</span>: <span style="color:#ae81ff">your-dockerhub-username/n8n</span>
+
+<span style="color:#f92672">servers</span>:
+  <span style="color:#f92672">web</span>:
+    - <span style="color:#ae81ff">your-server-ip</span>
+
+<span style="color:#f92672">registry</span>:
+  <span style="color:#f92672">username</span>: <span style="color:#ae81ff">your-dockerhub-username</span>
+  <span style="color:#f92672">password</span>:
+    - <span style="color:#ae81ff">KAMAL_REGISTRY_PASSWORD</span>
+
+<span style="color:#f92672">env</span>:
+  <span style="color:#f92672">clear</span>:
+    <span style="color:#f92672">PORT</span>: <span style="color:#ae81ff">5678</span>
+  <span style="color:#f92672">secret</span>:
+    - <span style="color:#ae81ff">N8N_BASIC_AUTH_ACTIVE</span>
+    - <span style="color:#ae81ff">N8N_BASIC_AUTH_USER</span>
+    - <span style="color:#ae81ff">N8N_BASIC_AUTH_PASSWORD</span>
+    - <span style="color:#ae81ff">N8N_ENCRYPTION_KEY</span>
+    - <span style="color:#ae81ff">N8N_PROTOCOL</span>
+    - <span style="color:#ae81ff">N8N_HOST</span>
+
+<span style="color:#f92672">volumes</span>:
+  - <span style="color:#ae81ff">/root/.n8n:/home/node/.n8n</span>
+
+<span style="color:#f92672">builder</span>:
+  <span style="color:#f92672">arch</span>: <span style="color:#ae81ff">amd64</span>
+
+<span style="color:#f92672">proxy</span>:
+  <span style="color:#f92672">ssl</span>: <span style="color:#66d9ef">true</span>
+  <span style="color:#f92672">host</span>: <span style="color:#ae81ff">your-domain.com</span>
+  <span style="color:#f92672">app_port</span>: <span style="color:#ae81ff">5678</span>
+</code></pre></div><p>Replace:</p>
+<ul>
+<li><code>your-dockerhub-username</code> with your Docker Hub username</li>
+<li><code>your-server-ip</code> with your Hetzner server IP</li>
+<li><code>your-domain.com</code> with your domain</li>
+</ul>
+<h2 id="step-5-set-up-environment-variables">Step 5: Set Up Environment Variables</h2>
+<h3 id="create-envexample-template">Create .env.example Template</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># .env.example</span>
+<span style="color:#75715e"># Docker Registry Password (Docker Hub)</span>
+KAMAL_REGISTRY_PASSWORD<span style="color:#f92672">=</span>your-docker-hub-password-here
+
+<span style="color:#75715e"># n8n Authentication</span>
+N8N_BASIC_AUTH_ACTIVE<span style="color:#f92672">=</span>true
+N8N_BASIC_AUTH_USER<span style="color:#f92672">=</span>admin
+N8N_BASIC_AUTH_PASSWORD<span style="color:#f92672">=</span>generate-a-secure-password
+
+<span style="color:#75715e"># n8n Configuration</span>
+N8N_PROTOCOL<span style="color:#f92672">=</span>https
+N8N_HOST<span style="color:#f92672">=</span>your-domain.com
+N8N_PORT<span style="color:#f92672">=</span><span style="color:#ae81ff">5678</span>
+
+<span style="color:#75715e"># n8n Encryption Key (DO NOT CHANGE after first deployment)</span>
+N8N_ENCRYPTION_KEY<span style="color:#f92672">=</span>generate-with-openssl-rand-hex-32
+</code></pre></div><h3 id="create-your-env-file">Create Your .env File</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Copy the template</span>
+cp .env.example .env
+
+<span style="color:#75715e"># Generate encryption key</span>
+openssl rand -hex <span style="color:#ae81ff">32</span>
+</code></pre></div><p>Edit <code>.env</code> and fill in:</p>
+<ul>
+<li>Your Docker Hub password</li>
+<li>A secure basic auth password</li>
+<li>The generated encryption key</li>
+<li>Your domain name</li>
+</ul>
+<h3 id="set-up-gitignore">Set Up .gitignore</h3>
+<p>Create <code>.gitignore</code> to protect your secrets:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Environment variables (contains secrets)</span>
+.env
+
+<span style="color:#75715e"># Kamal secrets</span>
+.kamal/secrets
+
+<span style="color:#75715e"># n8n data</span>
+.n8n/
+
+<span style="color:#75715e"># OS files</span>
+.DS_Store
+</code></pre></div><h3 id="create-kamal-secrets-file">Create Kamal Secrets File</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir -p .kamal
+cp .env .kamal/secrets
+</code></pre></div><h2 id="step-6-deploy-to-hetzner">Step 6: Deploy to Hetzner</h2>
+<h3 id="prepare-the-server">Prepare the Server</h3>
+<p>First, create the n8n data directory on your server:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh root@your-server-ip <span style="color:#e6db74">&#34;mkdir -p /root/.n8n &amp;&amp; chmod 777 /root/.n8n&#34;</span>
+</code></pre></div><h3 id="commit-your-configuration">Commit Your Configuration</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git add Dockerfile config/ .gitignore .env.example
+git commit -m <span style="color:#e6db74">&#34;Add Kamal deployment configuration for n8n&#34;</span>
+</code></pre></div><h3 id="run-initial-setup">Run Initial Setup</h3>
+<p>Start your SSH agent and deploy:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">eval <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>ssh-agent -s<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+ssh-add ~/.ssh/your-hetzner-key
+
+<span style="color:#75715e"># First-time deployment</span>
+kamal setup
+</code></pre></div><p>This will:</p>
+<ol>
+<li>Verify Docker is installed</li>
+<li>Build and push your n8n Docker image</li>
+<li>Set up kamal-proxy for SSL</li>
+<li>Deploy the n8n container</li>
+<li>Configure automatic SSL certificates</li>
+</ol>
+<p>The deployment takes 2-5 minutes. Watch for &ldquo;Deployed&rdquo; at the end!</p>
+<h2 id="step-7-configure-dns">Step 7: Configure DNS</h2>
+<h3 id="add-dns-records">Add DNS Records</h3>
+<p>In your domain registrar&rsquo;s DNS settings, add an A record:</p>
+<pre tabindex="0"><code>Type: A
+Name: n8n (or your subdomain)
+Value: your-server-ip
+TTL: 300
+</code></pre><h3 id="wait-for-propagation">Wait for Propagation</h3>
+<p>DNS can take 5-30 minutes to propagate. Check status:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Test DNS resolution</span>
+nslookup n8n.your-domain.com
+
+<span style="color:#75715e"># Should return your server IP</span>
+</code></pre></div><h3 id="ssl-certificate">SSL Certificate</h3>
+<p>Once DNS propagates, Kamal&rsquo;s proxy will automatically:</p>
+<ol>
+<li>Request a Let&rsquo;s Encrypt SSL certificate</li>
+<li>Configure HTTPS</li>
+<li>Redirect HTTP to HTTPS</li>
+</ol>
+<h2 id="access-your-n8n-instance">Access Your n8n Instance</h2>
+<p>Visit <code>https://n8n.your-domain.com</code> in your browser.</p>
+<h3 id="first-time-setup">First-Time Setup</h3>
+<ol>
+<li>You&rsquo;ll see the n8n setup wizard</li>
+<li>Create your owner account:
+<ul>
+<li><strong>Email</strong>: Your email address</li>
+<li><strong>Password</strong>: A secure password (different from basic auth)</li>
+</ul>
+</li>
+<li>Complete the setup</li>
+</ol>
+<p><strong>Note</strong>: The basic auth credentials in <code>.env</code> protect access to the site, while the n8n account is for logging into the application.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>This should give you an n8n instance to start experimenting with</p>
+<h3 id="next-steps">Next Steps</h3>
+<ol>
+<li><strong>Build workflows</strong>: Start automating your tasks!</li>
+<li><strong>Set up backups</strong>: Automate daily backups of <code>/root/.n8n</code></li>
+<li><strong>Monitor</strong>: Set up uptime monitoring (e.g., UptimeRobot)</li>
+<li><strong>Scale</strong>: Add more server resources as needed</li>
+</ol>
+<h3 id="resources">Resources</h3>
+<ul>
+<li><a href="https://docs.n8n.io/">n8n Documentation</a></li>
+<li><a href="https://kamal-deploy.org/">Kamal Documentation</a></li>
+<li><a href="https://docs.hetzner.com/cloud/">Hetzner Cloud Docs</a></li>
+<li><a href="https://github.com/niciliketo/n8n-iliketo-net">Example Repository</a></li>
+</ul>
+<p>Happy automating! 🚀</p>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://niciliketo.github.io/" >
+    &copy;  Things I have seen 2025 
+  </a>
+    <div>
+
+
+
+
+<a href="https://twitter.com/niciliketo" target="_blank" class="link-transition twitter link dib z-999 pt3 pt0-l mr1" title="Twitter link" rel="noopener" aria-label="follow on Twitter——Opens in a new window">
+  <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+<a href="https://www.linkedin.com/in/nicmartin/" target="_blank" class="link-transition linkedin link dib z-999 pt3 pt0-l mr1" title="LinkedIn link" rel="noopener" aria-label="follow on LinkedIn——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+<a href="https://github.com/niciliketo" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>
