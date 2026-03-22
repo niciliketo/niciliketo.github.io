@@ -1,4 +1,4 @@
-# niciliketo.github.io
+# [niciliketo.github.io](niciliketo.github.io)
 
 To run in dev mode
 ```bash
