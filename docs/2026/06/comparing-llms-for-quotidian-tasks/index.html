@@ -40,7 +40,7 @@
 <meta itemprop="name" content="Comparing LLMs for quotidian tasks">
 <meta itemprop="description" content="Evaluating Large Language Models for quotidian tasks"><meta itemprop="datePublished" content="2026-06-20T09:37:44+00:00" />
 <meta itemprop="dateModified" content="2026-06-20T09:37:44+00:00" />
-<meta itemprop="wordCount" content="1027">
+<meta itemprop="wordCount" content="1081">
 <meta itemprop="keywords" content="llm,work," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Comparing LLMs for quotidian tasks"/>
 <meta name="twitter:description" content="Evaluating Large Language Models for quotidian tasks"/>
@@ -194,8 +194,8 @@
 
       
       
-        <span class="f6 mv4 dib tracked"> - 5 minutes read</span>
-        <span class="f6 mv4 dib tracked"> - 1027 words</span>
+        <span class="f6 mv4 dib tracked"> - 6 minutes read</span>
+        <span class="f6 mv4 dib tracked"> - 1081 words</span>
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h1 id="comparing-llms-for-quotidian-tasks">Comparing LLMs for quotidian tasks</h1>
@@ -205,19 +205,19 @@
 <p>We recently moved to a new background job system (SolidQueue), and have implemented custom metrics which report to our hosting platform (GCP). I wanted to build a dashboard to help observe these metrics. This seemed like a good match for the test.</p>
 <h2 id="methodology">Methodology</h2>
 <h3 id="write-the-brief">Write the brief</h3>
-<p>I asked Claude Opus 4.6 in &lsquo;plan&rsquo; mode to write a plan which I could share with all three models. As part of the plan, the model should prompt for a dashboard name. I hoped this would allow me to give it an easy to check name (e.g. Background Job Metrics - Claude Opus 4.6).</p>
+<p>I asked Claude Opus 4.6 in &lsquo;plan&rsquo; mode to write a plan which I could share with all the models. As part of the plan, the model should prompt for a dashboard name. I hoped this would allow me to give it an easy to check name (e.g. Background Job Metrics - Claude Opus 4.6).</p>
 <p>Claude had access to <code>gh</code> and details of the PR where the metrics were added. It created a plan which looked solid covering context, metrics available, plus an implementation plan. It even specified which metrics to include.</p>
 <p>I saved the plan in a separate location without the source code.</p>
 <h3 id="run-the-models">Run the models</h3>
 <p>Before running each model, I ensured the plan document was the only thing in the folder.
 The prompt was the same each time: Please read and implement the plan in background-job-gcp-metrics.md</p>
+<p>After each test, if a file had been generated (in all cases, this was a dashboard definition JSON file), I moved it out of the testing folder.</p>
 <h3 id="claude-sonnet-46">Claude Sonnet 4.6</h3>
 <ul>
 <li>I opened Claude Code CLI</li>
 <li>chose Claude Sonnet 4.6 and entered the prompt</li>
 <li>Claude quickly prompted me for a dashboard name and got to work. After a couple of false-starts it verified the metrics existed in the specified project and generated some JSON.</li>
 </ul>
-<p>Finally, I moved the json dashboard definition out of the testing folder.</p>
 <h3 id="gpt-55-fast">GPT-5.5 Fast</h3>
 <ul>
 <li>I opened opencode</li>
@@ -225,7 +225,6 @@ The prompt was the same each time: Please read and implement the plan in backgro
 <li>GPT didn&rsquo;t bother checking if the metrics existed, it just created the dashboard json</li>
 <li>It then struggled a bit with gcloud cli before it was able to actually add it to GCP</li>
 </ul>
-<p>Finally, I moved the json dashboard definition out of the testing folder.</p>
 <h3 id="mimo-v25">MiMo-V2.5</h3>
 <p>I first obtained an api key and purchased credits from open router. I configured routing to use Digital Ocean only and turned Zero Data Retention in the settings.</p>
 <ul>
@@ -246,7 +245,6 @@ The prompt was the same each time: Please read and implement the plan in backgro
 <li>After another minute, it generated a dashboard, but gcp rejected it with <code>Invalid JSON payload received.</code></li>
 <li>After spending a bit longer checking the dashboard, it was created.</li>
 </ul>
-<p>Finally, I moved the json dashboard definition out of the testing folder.</p>
 <h3 id="deepseek-v4-pro">DeepSeek v4 Pro</h3>
 <ul>
 <li>I opened opencode</li>
@@ -262,8 +260,7 @@ The prompt was the same each time: Please read and implement the plan in backgro
 </ul>
 <pre tabindex="0"><code>The JSON config is saved at solid_queue_dashboard.json. For the DB connections tile, I used [REDACTED] — if that filter                                                    
 doesn't match, you'll need to adjust it to the full Cloud SQL instance ID (e.g. [REDACTED]).     
-</code></pre><p>Finally, I moved the json dashboard definition out of the testing folder.</p>
-<h2 id="results">Results</h2>
+</code></pre><h2 id="results">Results</h2>
 <h3 id="claude-sonnet-46---45">Claude Sonnet 4.6 - <strong>4/5</strong></h3>
 <p>Just did the work, minimal reprompting.
 Nice dashboard with 6 charts.
@@ -294,6 +291,10 @@ Got the db connections graph wrong (although its parting comment showed it was c
 <h4 id="mimo-v25---05">MiMo-V2.5 - <strong>0/5</strong></h4>
 <p>OpenRouter stats page claims a context length of 1.05M tokens, however I received an error as the planning document was too long.</p>
 <p>This endpoint&rsquo;s maximum context length is 32000 tokens. However, you requested about 32522 tokens (522 of text input, 32000 in the output).</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The open weights models did a reasonable job, however required more time and help to complete the task.
+Costs were not significantly lower, in fact Claude was cheapest (albeit due to using a subscription).</p>
+<p>Based on this experiment I believe that using a Claude Pro or Codex subscription in combination with GitHub Copilot when limits are hit would be the best solution for my use-case. This may vary for other members of the team.</p>
 <h3 id="notes">Notes</h3>
 <p>I didn&rsquo;t compare the time it took to produce results in this experiment, or the number of mistakes along the way.</p>
 <ul class="pa0">
