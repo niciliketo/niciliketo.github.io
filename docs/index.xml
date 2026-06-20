@@ -6,7 +6,17 @@
     <description>Recent content in The things I have seen on Things I have seen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-GB</language>
-    <lastBuildDate>Sun, 19 Oct 2025 13:05:50 +0000</lastBuildDate><atom:link href="https://niciliketo.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 20 Jun 2026 09:37:44 +0000</lastBuildDate><atom:link href="https://niciliketo.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Comparing LLMs for quotidian tasks</title>
+      <link>https://niciliketo.github.io/2026/06/comparing-llms-for-quotidian-tasks/</link>
+      <pubDate>Sat, 20 Jun 2026 09:37:44 +0000</pubDate>
+      
+      <guid>https://niciliketo.github.io/2026/06/comparing-llms-for-quotidian-tasks/</guid>
+      <description>Comparing LLMs for quotidian tasks GitHub Copilot recently moved to usage based pricing, and we see our costs rising significantly, especially for outlying users. This inspired me to compare performance across some different LLMs and harnesses as we decide how to allocate spending in the coming months.
+The task Not every task requires the highest level of intelligence. For this test, I wanted to choose something that should not require a huge context window or run for multiple hours.</description>
+    </item>
+    
     <item>
       <title>How to Deploy n8n to Hetzner with Kamal</title>
       <link>https://niciliketo.github.io/2025/10/how-to-deploy-n8n-to-hetzner-with-kamal/</link>
