@@ -1,0 +1,133 @@
+# Brief: GCP Cloud Monitoring Dashboard for Solid Queue Metrics
+
+## Context
+
+PR #24673 ("Split Solid Queue workers by latency SLO and connection cost") landed two observability additions:
+
+1. **`app/services/solid_queue_metrics.rb`** — publishes 7 custom gauges to `custom.googleapis.com/solid_queue/*` every minute via a recurring Solid Queue task (guarded by `Environment.google_cloud? && !Environment.preview?`).
+2. **`config/initializers/active_job_duration_logging.rb`** — emits one structured `jsonPayload` log line per job execution (`event: "job.performed"`, with fields `job_class`, `queue`, `duration_ms`, `queue_wait_ms`, `attempt`, `status`) to Cloud Logging.
+
+The task is to create a GCP Cloud Monitoring dashboard that surfaces these metrics in a useful way, using the `gcloud` CLI.
+
+---
+
+## Metrics Available
+
+### Custom metrics (`custom.googleapis.com/solid_queue/*`)
+
+| Metric | Labels | Role |
+|--------|--------|------|
+| `ready_count` | `queue` | Backlog depth per queue |
+| `oldest_ready_age_seconds` | `queue` | **Primary SLO signal** — age of oldest waiting job |
+| `claimed_count` | — | In-flight jobs across cluster |
+| `oldest_claimed_age_seconds` | — | Hung-job / VM-freeze detector |
+| `blocked_count` | — | Jobs held by concurrency controls |
+| `failed_count` | — | Failure backlog |
+| `workers_alive` | — | Workers with heartbeat in last 30 s |
+
+Known queues zero-filled for continuity: `real_time`, `interactive`, `default`, `integration`, `indexing`, `searchkick`, `solid_queue_recurring`.
+
+### Native Cloud SQL metric (free, no setup needed)
+- `cloudsql.googleapis.com/database/postgresql/num_backends` — DB connections in use (the root cause of the original incidents)
+
+---
+
+## Implementation Plan
+
+### Step 1 — Ask the user for the dashboard name
+
+Before writing any JSON, prompt the user interactively:
+
+```
+read -p "Enter a name for the GCP dashboard (e.g. 'Solid Queue Health'): " DASHBOARD_NAME
+```
+
+Store it in `$DASHBOARD_NAME` for use in the JSON payload below.
+
+---
+
+### Step 2 — Verify metrics are flowing
+
+```bash
+gcloud monitoring time-series list \
+  --filter='metric.type="custom.googleapis.com/solid_queue/ready_count"' \
+  --project="$GCP_PROJECT_ID" \
+  --format="table(metric.labels.queue, points[0].value.doubleValue)" \
+  --limit=10
+```
+
+If no rows appear, either the recurring task hasn't fired yet or the environment guard is blocking it. Resolve before building the dashboard.
+
+---
+
+### Step 3 — Build the dashboard JSON
+
+Write `solid_queue_dashboard.json` with the following six tiles:
+
+#### Tile 1 — Queue Backlog (`ready_count` per queue)
+- Type: Line chart
+- Metric: `custom.googleapis.com/solid_queue/ready_count`
+- Group by: `metric.labels.queue`
+- Purpose: Shows whether any queue is growing (drainage problem).
+
+#### Tile 2 — Oldest Ready Job Age (`oldest_ready_age_seconds` per queue)
+- Type: Line chart
+- Metric: `custom.googleapis.com/solid_queue/oldest_ready_age_seconds`
+- Group by: `metric.labels.queue`
+- Purpose: **The headline SLO signal.** A spike here means a job class is waiting too long regardless of throughput. Set an alert threshold here (e.g. `real_time > 30 s`, `interactive > 60 s`).
+
+#### Tile 3 — In-flight & Hung Jobs
+- Type: Stacked bar or scorecard
+- Metrics: `claimed_count` (in-flight) + `oldest_claimed_age_seconds` (age of longest-running job)
+- Purpose: `oldest_claimed_age_seconds` > ~10 min signals a frozen MalwareScanJob / VM freeze.
+
+#### Tile 4 — Failure & Blocked Backlog
+- Type: Scorecard / single-value tiles
+- Metrics: `failed_count`, `blocked_count`
+- Purpose: Failure backlog grows silently without this. Concurrency-blocked jobs indicate contention.
+
+#### Tile 5 — Worker Health
+- Type: Scorecard
+- Metric: `workers_alive`
+- Purpose: Drop to zero = no capacity at all. Useful during deploys / VM restarts.
+
+#### Tile 6 — DB Connections
+- Type: Line chart
+- Metric: `cloudsql.googleapis.com/database/postgresql/num_backends`
+- Filter: target the `auction_queue` database instance
+- Purpose: The root cause of the original incidents. Pair with queue metrics to detect connection saturation.
+
+---
+
+### Step 4 — Create the dashboard
+
+```bash
+gcloud monitoring dashboards create \
+  --config-from-file=solid_queue_dashboard.json \
+  --project="$GCP_PROJECT_ID"
+```
+
+Capture the returned dashboard ID from the output.
+
+---
+
+### Step 5 — Verify
+
+Open the dashboard URL in the GCP Console:
+```
+https://console.cloud.google.com/monitoring/dashboards?project=$GCP_PROJECT_ID
+```
+
+Check:
+- All six tiles render without "No data" (if metrics are flowing).
+- `ready_count` per-queue lines are distinguishable.
+- `workers_alive` shows the expected count.
+
+---
+
+## Notes
+
+- The dashboard JSON must use the [Cloud Monitoring Dashboard API v1 format](https://cloud.google.com/monitoring/api/ref_v3/rest/v1/projects.dashboards).
+- Use `"dashboardFilters": []` and `"mosaicLayout"` for flexible tile sizing.
+- The `global` monitored resource type is used by the metrics service — filter on `resource.type = "global"` in MQL/filter expressions if needed.
+- Log-based metrics (e.g. p95 `duration_ms` per `job_class`) can be added later via `gcloud logging metrics create` and then referenced like any custom metric. This is optional for the initial dashboard.

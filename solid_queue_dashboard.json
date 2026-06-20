@@ -1,0 +1,243 @@
+{
+  "displayName": "Background Job Metrics - Claude Sonnet 4.6",
+  "mosaicLayout": {
+    "columns": 12,
+    "tiles": [
+      {
+        "xPos": 0,
+        "yPos": 0,
+        "width": 6,
+        "height": 4,
+        "widget": {
+          "title": "Queue Backlog (ready_count per queue)",
+          "xyChart": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"custom.googleapis.com/solid_queue/ready_count\" resource.type=\"global\"",
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "perSeriesAligner": "ALIGN_MEAN",
+                      "crossSeriesReducer": "REDUCE_NONE",
+                      "groupByFields": ["metric.label.queue"]
+                    }
+                  }
+                },
+                "plotType": "LINE",
+                "legendTemplate": "${metric.label.queue}"
+              }
+            ],
+            "timeshiftDuration": "0s",
+            "yAxis": {
+              "label": "Jobs waiting",
+              "scale": "LINEAR"
+            }
+          }
+        }
+      },
+      {
+        "xPos": 6,
+        "yPos": 0,
+        "width": 6,
+        "height": 4,
+        "widget": {
+          "title": "Oldest Ready Job Age — SLO Signal (seconds per queue)",
+          "xyChart": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"custom.googleapis.com/solid_queue/oldest_ready_age_seconds\" resource.type=\"global\"",
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "perSeriesAligner": "ALIGN_MEAN",
+                      "crossSeriesReducer": "REDUCE_NONE",
+                      "groupByFields": ["metric.label.queue"]
+                    }
+                  }
+                },
+                "plotType": "LINE",
+                "legendTemplate": "${metric.label.queue}"
+              }
+            ],
+            "timeshiftDuration": "0s",
+            "yAxis": {
+              "label": "Age (seconds)",
+              "scale": "LINEAR"
+            }
+          }
+        }
+      },
+      {
+        "xPos": 0,
+        "yPos": 4,
+        "width": 6,
+        "height": 4,
+        "widget": {
+          "title": "In-flight & Hung Jobs",
+          "xyChart": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"custom.googleapis.com/solid_queue/claimed_count\" resource.type=\"global\"",
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "perSeriesAligner": "ALIGN_MEAN",
+                      "crossSeriesReducer": "REDUCE_SUM"
+                    }
+                  }
+                },
+                "plotType": "STACKED_BAR",
+                "legendTemplate": "in-flight (claimed_count)"
+              },
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"custom.googleapis.com/solid_queue/oldest_claimed_age_seconds\" resource.type=\"global\"",
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "perSeriesAligner": "ALIGN_MEAN",
+                      "crossSeriesReducer": "REDUCE_MAX"
+                    }
+                  }
+                },
+                "plotType": "LINE",
+                "legendTemplate": "oldest claimed age (seconds)",
+                "targetAxis": "Y2"
+              }
+            ],
+            "timeshiftDuration": "0s",
+            "yAxis": {
+              "label": "Job count",
+              "scale": "LINEAR"
+            },
+            "y2Axis": {
+              "label": "Age (seconds)",
+              "scale": "LINEAR"
+            }
+          }
+        }
+      },
+      {
+        "xPos": 6,
+        "yPos": 4,
+        "width": 3,
+        "height": 4,
+        "widget": {
+          "title": "Failed Job Backlog",
+          "scorecard": {
+            "timeSeriesQuery": {
+              "timeSeriesFilter": {
+                "filter": "metric.type=\"custom.googleapis.com/solid_queue/failed_count\" resource.type=\"global\"",
+                "aggregation": {
+                  "alignmentPeriod": "60s",
+                  "perSeriesAligner": "ALIGN_MEAN",
+                  "crossSeriesReducer": "REDUCE_SUM"
+                }
+              }
+            },
+            "thresholds": [
+              {
+                "label": "Warning",
+                "value": 10,
+                "color": "YELLOW",
+                "direction": "ABOVE"
+              },
+              {
+                "label": "Critical",
+                "value": 50,
+                "color": "RED",
+                "direction": "ABOVE"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "xPos": 9,
+        "yPos": 4,
+        "width": 3,
+        "height": 4,
+        "widget": {
+          "title": "Blocked Job Backlog",
+          "scorecard": {
+            "timeSeriesQuery": {
+              "timeSeriesFilter": {
+                "filter": "metric.type=\"custom.googleapis.com/solid_queue/blocked_count\" resource.type=\"global\"",
+                "aggregation": {
+                  "alignmentPeriod": "60s",
+                  "perSeriesAligner": "ALIGN_MEAN",
+                  "crossSeriesReducer": "REDUCE_SUM"
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "xPos": 0,
+        "yPos": 8,
+        "width": 3,
+        "height": 3,
+        "widget": {
+          "title": "Workers Alive",
+          "scorecard": {
+            "timeSeriesQuery": {
+              "timeSeriesFilter": {
+                "filter": "metric.type=\"custom.googleapis.com/solid_queue/workers_alive\" resource.type=\"global\"",
+                "aggregation": {
+                  "alignmentPeriod": "60s",
+                  "perSeriesAligner": "ALIGN_MEAN",
+                  "crossSeriesReducer": "REDUCE_SUM"
+                }
+              }
+            },
+            "thresholds": [
+              {
+                "label": "No workers",
+                "value": 1,
+                "color": "RED",
+                "direction": "BELOW"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "xPos": 3,
+        "yPos": 8,
+        "width": 9,
+        "height": 3,
+        "widget": {
+          "title": "DB Connections (auction_queue instance)",
+          "xyChart": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"cloudsql.googleapis.com/database/postgresql/num_backends\" resource.type=\"cloudsql_database\"",
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "perSeriesAligner": "ALIGN_MEAN",
+                      "crossSeriesReducer": "REDUCE_SUM"
+                    }
+                  }
+                },
+                "plotType": "LINE",
+                "legendTemplate": "DB connections"
+              }
+            ],
+            "timeshiftDuration": "0s",
+            "yAxis": {
+              "label": "Connections",
+              "scale": "LINEAR"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "dashboardFilters": []
+}
